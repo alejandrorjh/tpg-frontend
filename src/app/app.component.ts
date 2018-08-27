@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as randomWords from 'random-words';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'tpg-fe';
+  title = randomWords(1);
 }
