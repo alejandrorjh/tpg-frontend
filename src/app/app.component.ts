@@ -7,5 +7,25 @@ import * as randomWords from 'random-words';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  randomWord = randomWords(1);
+  randomWord;
+  typedWord : string;
+  hideWord = true;
+  count = 0;
+
+  startGame() {
+    if (this.hideWord) {
+        this.randomWord = randomWords(1)[0];
+        this.count = 0;
+        this.typedWord = "";
+    }
+    this.hideWord = !this.hideWord;
+  }
+
+  checkWord() {
+    if (this.randomWord == this.typedWord) {
+      this.randomWord = randomWords(1)[0];
+      this.count = this.count + 1;
+      this.typedWord = "";
+    }
+  }
 }

@@ -1,9 +1,27 @@
 <app-layout>
   <div class="jumbotron">
-    <h1>Angular CLI v6 + Bootstrap & FontAwesome</h1>
+    <h1>Typing game</h1>
     <p>
-      In this tutorial you learn how to use Angular CLI v6 with Bootstrap and FontAwesome!
+      Type as fast as you can each word that appears down below in a set ammount of time!
     </p>
   </div>
-  <h3>Random word of the day: {{randomWord}}</h3>
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Press button when ready:</h3>
+    </div>
+    <div class="col-sm-8">
+      <button type="button" style="width:100%" class="btn btn-success" (click)="startGame()">Start!</button>
+    </div>
+    <div class="col-sm-12" [hidden]=hideWord>
+      <div class="col-sm-12" style="align-items:center">
+        <h4>Word: {{randomWord}}</h4>
+      </div>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" [(ngModel)]="typedWord" (input)="checkWord()">
+      </div>
+      <div class="col-sm-6">
+        <h4>Completed: {{count}}</h4>
+      </div>
+    </div>
+  </div>
 </app-layout>
