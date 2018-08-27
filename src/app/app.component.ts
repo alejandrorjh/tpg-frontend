@@ -7,5 +7,5 @@ import * as randomWords from 'random-words';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = randomWords(1);
+  randomWord = randomWords(1);
 }
