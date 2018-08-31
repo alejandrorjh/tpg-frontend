@@ -2,25 +2,26 @@
   <div class="jumbotron">
     <h1>Typing game</h1>
     <p>
-      Type as fast as you can each word that appears down below in a set ammount of time!
+      Type as fast as you can each word that appears down below in a set amount of time!
     </p>
   </div>
   <div class="row">
-    <div class="col-sm-4">
-      <h3>Press button when ready:</h3>
-    </div>
-    <div class="col-sm-8">
-      <button type="button" style="width:100%" class="btn btn-success" (click)="startGame()">Start!</button>
-    </div>
-    <div class="col-sm-12" [hidden]=hideWord>
+    <div class="col-sm-6">
       <div class="col-sm-12" style="align-items:center">
-        <h4>Word: {{randomWord}}</h4>
+        <label>Word: {{randomWord}}</label>
       </div>
-      <div class="col-sm-6">
-        <input type="text" class="form-control" [(ngModel)]="typedWord" (input)="checkWord()">
+      <div class="col-sm-12">
+        <input type="text" class="form-control" [(ngModel)]="typedWord" (input)="checkWord()" #wordInput>
       </div>
-      <div class="col-sm-6">
-        <h4>Completed: {{count}}</h4>
+    </div>
+    <div class="col-sm-6">
+      <div class="col-sm-12" style="padding-bottom:12px">
+        <button type="button" style="width:100%" class="btn" [ngClass]="(!timeout) ? 'btn-primary' : 'btn-danger'" (click)="restartGame()" [disabled]="!timeout">{{typingButtonLabel}}</button>
+      </div>
+      <div class="col-sm-12">
+        <label>Time left: {{timeLeft}} seconds</label><br>
+        <label>Completed: {{correctWords}}</label><br>
+        <label>Accuracy: {{accuracy}}%</label>
       </div>
     </div>
   </div>
