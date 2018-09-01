@@ -11,17 +11,29 @@
         <label>Word: {{randomWord}}</label>
       </div>
       <div class="col-sm-12">
-        <input type="text" class="form-control" [(ngModel)]="typedWord" (input)="checkWord()" #wordInput>
+        <input type="text" class="form-control" [(ngModel)]="typedWord" (input)="checkWord($event)" #wordInput>
       </div>
     </div>
     <div class="col-sm-6">
       <div class="col-sm-12" style="padding-bottom:12px">
-        <button type="button" style="width:100%" class="btn" [ngClass]="(!timeout) ? 'btn-primary' : 'btn-danger'" (click)="restartGame()" [disabled]="!timeout">{{typingButtonLabel}}</button>
+        <button type="button" style="width:100%" class="btn" [ngClass]="(!timeout) ? 'btn-primary' : 'btn-danger'" 
+          (click)="restartGame()" [disabled]="!timeout" #restarButton>{{typingButtonLabel}}</button>
       </div>
       <div class="col-sm-12">
-        <label>Time left: {{timeLeft}} seconds</label><br>
-        <label>Completed: {{correctWords}}</label><br>
-        <label>Accuracy: {{accuracy}}%</label>
+        <label style="margin-right:30px"><b>Time left:</b> {{timeLeft}} seconds</label>
+        <label><b>Completed:</b> {{correctWords}}</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <h6>Current session stats</h6>
+      <p *ngIf="stats.length < 1">You haven't played any game yet!</p>
+      <div class="row" *ngIf="stats.length > 0">
+        <div class="col-sm-12">
+          <label style="margin-right: 30px"><b>Words typed:</b> {{golablWordsTyped}}</label>
+          <label><b>Accuracy:</b> {{(globalAccuracy > 0) ? globalAccuracy + '%' : 'N/A'}}</label>
+        </div>
       </div>
     </div>
   </div>
