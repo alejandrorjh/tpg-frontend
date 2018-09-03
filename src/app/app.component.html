@@ -7,12 +7,8 @@
   </div>
   <div class="row">
     <div class="col-sm-6">
-      <div class="col-sm-12" style="align-items:center">
-        <label>Word: {{randomWord}}</label>
-      </div>
-      <div class="col-sm-12">
-        <input type="text" class="form-control" [(ngModel)]="typedWord" (input)="checkWord($event)" #wordInput>
-      </div>
+      <div class="col-sm-12" [innerHTML]="displayedWord"></div>
+      <input type="text" class="form-control" [(ngModel)]="typedWord" (input)="checkWord($event)" #wordInput>
     </div>
     <div class="col-sm-6">
       <div class="col-sm-12" style="padding-bottom:12px">
