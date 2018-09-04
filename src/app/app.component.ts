@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, ViewEncapsulation} from '@angular/core';
 import * as randomWords from 'random-words';
 import * as moment from 'moment';
+import Axios from 'axios';
 import { Score } from './shared/score.model';
 import { MistypedChar } from './shared/mistyped.model';
 import { WordScore } from './shared/word.score.model'
@@ -128,17 +129,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     var jsonScore = JSON.stringify(score);
     console.log(jsonScore);
 
-    this.testEndpoint();
+    this.postScoreToAWS(jsonScore);
   }
 
-  async testEndpoint() {
-    const baseUrl = 'https://jsonplaceholder.typicode.com/todos/1';
-    var options = {
-        uri: baseUrl
-    };
-
-    // const result = await request.get(options);
-    // console.log(result);
+  async postScoreToAWS(body) {
+    // let endpoint = "https://omaeg1xayi.execute-api.us-east-2.amazonaws.com/Dev/post-score";
+    // Axios.post(endpoint, body)
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   }
 
   accurateTyping() {
