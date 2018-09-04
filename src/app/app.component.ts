@@ -1,7 +1,9 @@
 import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, ViewEncapsulation} from '@angular/core';
 import * as randomWords from 'random-words';
+import * as moment from 'moment';
 import { Score } from './shared/score.model';
 import { MistypedChar } from './shared/mistyped.model';
+import { WordScore } from './shared/word.score.model'
 
 @Component({
   selector: 'app-root',
@@ -9,7 +11,7 @@ import { MistypedChar } from './shared/mistyped.model';
   styleUrls: ['./app.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit {  
   scoring = {
     gameScore: [],
     mistypes: []
@@ -30,7 +32,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   correctChars = 0;
   correctWords = 0;
   accuracy = 100;
-  baseTime = 10;
+  baseTime = 2;
   failures = 0;
   userID = 0;
 
@@ -54,8 +56,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.timeout = true;
     this.gameStarted = false;
     this.wordInput.nativeElement.disabled = true;
-    this.saveGameResults();
     this.updateStats();
+    this.saveGameResults();
+    this.scoring.gameScore = [];
+    this.scoring.mistypes = [];
     this.typingButtonLabel = "Restart?"
   }
 
@@ -99,7 +103,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     if (this.randomWord == this.typedWord) {
       this.correctWords = this.correctWords + 1;
-      this.scoring.gameScore.push(new Score(this.userID, this.typedWord, this.failures, this.accuracy));
+      this.scoring.gameScore.push(new WordScore(this.userID, this.typedWord, this.failures, this.accuracy));
       this.updateWord();
     } else if (!this.accurateTyping()) {
       this.updateAccuracy();
@@ -119,7 +123,22 @@ export class AppComponent implements OnInit, AfterViewInit {
   saveGameResults() {
     var jsonObj = JSON.stringify(this.scoring);
     this.stats.push(jsonObj);
-    console.log(this.stats);
+
+    let score = new Score(0, 100, this.correctWords, this.globalAccuracy, 7, moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));
+    var jsonScore = JSON.stringify(score);
+    console.log(jsonScore);
+
+    this.testEndpoint();
+  }
+
+  async testEndpoint() {
+    const baseUrl = 'https://jsonplaceholder.typicode.com/todos/1';
+    var options = {
+        uri: baseUrl
+    };
+
+    // const result = await request.get(options);
+    // console.log(result);
   }
 
   accurateTyping() {
@@ -162,7 +181,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   highlightMistake() {
-    debugger;
     let mistakes = this.typedWord.length - this.correctChars;
 
     let firstPart = this.randomWord.substring(0, this.correctChars);
